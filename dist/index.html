@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Test Page</title>
+</head>
+<body>
+	<script src="logger.js"></script>
+	<script>
+
+logger.config({
+	// enabled: false,
+	// styled: false
+});
+// logger.filter().only(['world', 'another']);
+// logger.filter().exclude('world');
+
+logger.log("log from default logger", {key: 'value'}, 3);
+
+helloLogger = logger.child('hello', {
+	color: 'white',
+	background: 'green',
+	'border-radius': '2px',
+	padding: '1px 3px',
+	margin: '0 1px'
+});
+
+helloLogger.log('log from hello logger', {key: 'value'}, 5);
+
+worldLogger = helloLogger.child('world', {
+	color: 'white',
+	background: 'purple',
+	'border-radius': '2px',
+	padding: '1px 3px',
+	margin: '0 1px'
+});
+worldLogger.log('log from world logger', {key: 'value'}, 4)
+
+helloLogger.child('another', {}, function(logger)
+{
+	// logger is the new 'another' logger instance
+	logger.log("logger is the new 'another' logger instance");
+	logger.parent().log('hello logger will log') // => hello logger will log
+});
+
+var methods = [
+	'time', 'groupCollapsed', 'assert', /*'clear', */'count', 'debug',
+	'dirxml', 'dirxml', 'error', 'exception', 'group', 'info', 'log',
+	'groupEnd', 'markTimeline', 'table', 'timeStamp', 'trace', 'warn',
+	'timeEnd', 'groupEnd'
+];
+for (var i = 0; i < methods.length; i++) {
+	method = methods[i];
+	logger[method](method + " from default logger", document.body, {key: 'value'}, 3);
+}
+for (var i = 0; i < methods.length; i++) {
+	method = methods[i];
+	helloLogger[method](method + " from 'hello' logger", document.body, {key: 'value'}, 3);
+}
+for (var i = 0; i < methods.length; i++) {
+	method = methods[i];
+	worldLogger[method](method + " from 'hello world' logger", document.body, {key: 'value'}, 3);
+}
+	</script>
+</body>
+</html>
