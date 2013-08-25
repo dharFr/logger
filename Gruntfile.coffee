@@ -13,7 +13,6 @@ module.exports = (grunt) ->
   grunt.initConfig
     yeoman: yeomanConfig
 
-
     coffee:
       dist:
         files: [
