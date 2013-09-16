@@ -73,7 +73,6 @@ _defineMethods = () ->
 	for meth in methods
 		@[meth] = @__out[meth].bind @__out, args...
 
-
 class Logger
 
 	constructor: (@label, @__style=null, @__parent=null) ->
@@ -90,6 +89,17 @@ class Logger
 		return ret
 
 l = new Logger
+
+# Some browsers don't allow to use bind on console object anyway
+# fallback to default if needed
+try
+	l.log()
+catch e
+	l = console
+	l.child = -> l
+	l.parent = ->
+	_defineMethods = ->
+
 loggerInstances = [l]
 l.config = (conf) ->
 	# without parameter, return current conf
