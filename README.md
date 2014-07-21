@@ -1,3 +1,7 @@
+# Not maintained anymore...
+
+*logger.js* is not maintained anymore. It was an experimental proof-of-concept project and has been replaced with [dharFr/badgee](//github.com/dharFr/badgee).
+
 # logger.js
 
 browser console improved
